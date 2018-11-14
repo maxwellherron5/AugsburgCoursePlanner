@@ -78,8 +78,6 @@ def main():
 					  "business/degree-requirements/business-administration/", "business/degree-requirements/accounting/", "business/degree-requirements/finance/", "business/degree-requirements/international-business/", "business/degree-requirements/management/", "business/degree-requirements/management-information-systems/", "business/degree-requirements/marketing/", 
 					  "communication/degrees/communication-studies/", "communication/degrees/film/", "communication/degrees/new-media/",
 					  "chemistry", "cs", "economics", "economics", "english", "environmental", "womensstudies", "hpe", "languages", "mathematics", "music/programs/requirements/", "philosophy", "physics",  "politicalscience", "psychology", "religion", "socialwork/academics", "sociology", "theater", "urban"]
-
-	other_degrees = ["music"]
 	degrees = []
 	#Film does not account for tracks. See: http://www.augsburg.edu/communication/degrees/film/
 	#Education major is suuuuuuper wacky and not at all uniform.
