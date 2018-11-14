@@ -41,25 +41,26 @@ def create_url(str):
 		return("http://www.augsburg.edu/" + str + "/degree-requirements")
 
 def create_major(majors, titles, degrees, uls, majorkeyword, minorkeyword):
-	for k in range(len(titles)-1): #Only adds item to the major list if it has the word major or minor in it
-		if majorkeyword in str(titles[k]):
+	for k in titles: #Only adds item to the major list if it has the word major or minor in it
+		if majorkeyword in str(k):
+			print(str(k))
 			#print("Appended: ", titles[k])
 			this_ul = []
 			children = uls.findChildren("li", recursive=False)
 			
 			for child in children: #Adds children of a ul tag to an array
 				this_ul.append(str(child.text.strip().replace('<li>', '')))
-			degree_requirements = DegreeRequirements(titles[k], this_ul) #instance of class
+			degree_requirements = DegreeRequirements(k, this_ul) #instance of class
 			degrees.append(degree_requirements)	#add degree_requirements object to list
 
-		if minorkeyword in str(titles[k]):
+		if minorkeyword in str(k):
 			#print("Appended: ", titles[k])
 			this_ul = []
 			children = uls.findChildren("li", recursive=False)
 			
 			for child in children:
 				this_ul.append(str(child.text.strip().replace('<li>', '')))
-			degree_requirements = DegreeRequirements(titles[k], this_ul)
+			degree_requirements = DegreeRequirements(k, this_ul)
 			degrees.append(degree_requirements)
 
 
@@ -81,8 +82,8 @@ def main():
 		minorkeyword = "Minor"
 
 		if "biology" in normal_degrees[i]:
-			majorkeyword = "Biology"
-			minorkeyword = "Biology"
+			majorkeyword = "Bachelor"
+			minorkeyword = "Bachelor"
 
 		#properly appends the URL for a major
 		majors = get_site(url)
@@ -105,6 +106,7 @@ def main():
 		for a in x: #This loop strips the list of all h2 tags
 			if "biology" in normal_degrees[i]:
 			 	titles.append(str(a.strip().replace('<h1 class="entry-title">', '').replace('</h1>', '')))
+			 	#print(str(titles[0]))
 			else:
 				titles.append(str(a.text.strip().replace('<h2>', '').replace('</h2>', '')))
 
