@@ -89,7 +89,9 @@ def main():
 		#finds the proper div
 
 		if "biology" in normal_degrees[i]:
-			x = majors.find_all('h1')
+			page_response = requests.get(url, timeout=5)
+			page_content = BeautifulSoup(page_response.content, "html.parser")
+			x = page_content.find(class_='entry-title')
 		else:
 			x = majors.find_all('h2')
 
@@ -102,13 +104,14 @@ def main():
 
 		for a in x: #This loop strips the list of all h2 tags
 			if "biology" in normal_degrees[i]:
-				titles.append(str(a.text.strip().replace('<h1>', '').replace('</h1>', '')))
+			 	titles.append(str(a.strip().replace('<h1 class="entry-title">', '').replace('</h1>', '')))
 			else:
 				titles.append(str(a.text.strip().replace('<h2>', '').replace('</h2>', '')))
 
+		#print(titles)
 		create_major(majors, titles, degrees, uls, majorkeyword, minorkeyword)		
 
-	#print_arr(degrees)
+	print_arr(degrees)
 
 if __name__ == '__main__':
 	main()  
