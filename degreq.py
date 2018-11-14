@@ -89,7 +89,6 @@ def main():
 	#Film does not account for tracks. See: http://www.augsburg.edu/communication/degrees/film/
 	#Education major is suuuuuuper wacky and not at all uniform. Special education has been accounted for, but I'm not at all sure how to do the rest.
 	#History is also wonky.
-	#Medieval Studies ends in /program-details/
 	for i in range(len(normal_degrees)):
 		url = create_url(normal_degrees[i])
 
