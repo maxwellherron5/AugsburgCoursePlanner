@@ -43,6 +43,8 @@ def create_url(str):
 		return("http://www.augsburg.edu/" + str)
 	if "music" in str:
 		return("http://www.augsburg.edu/" + str)
+	if "medievalstudies" in str:
+		return("http://www.augsburg.edu/" + str)
 	else:
 		return("http://www.augsburg.edu/" + str + "/degree-requirements")
 
@@ -79,12 +81,13 @@ def main():
 					  "communication/degrees/communication-studies/", "communication/degrees/film/", "communication/degrees/new-media/",
 					  "chemistry", "cs", 
 					  "education/programs/sped/degree-requirements/", 
-					  "economics", "english", "environmental", "womensstudies", "hpe", "languages", "mathematics", 
+					  "economics", "english", "environmental", "womensstudies", "hpe", "languages", "mathematics",
+					  "medievalstudies/program-details/", 
 					  "music/programs/requirements/", 
 					  "philosophy", "physics",  "politicalscience", "psychology", "religion", "socialwork/academics", "sociology", "theater", "urban"]
 	degrees = []
 	#Film does not account for tracks. See: http://www.augsburg.edu/communication/degrees/film/
-	#Education major is suuuuuuper wacky and not at all uniform.
+	#Education major is suuuuuuper wacky and not at all uniform. Special education has been accounted for, but I'm not at all sure how to do the rest.
 	#History is also wonky.
 	#Medieval Studies ends in /program-details/
 	for i in range(len(normal_degrees)):
@@ -122,6 +125,8 @@ def main():
 				x = page_content.find(class_='entry-title')
 			if "music" in normal_degrees[i]:
 				x = majors.find_all('h2')
+			if "medievalstudies" in normal_degrees[i]:
+				x = majors.find_all('h2')
 
 		else:
 			x = majors.find_all('h2')
@@ -143,6 +148,8 @@ def main():
 				 	titles.append(str(a.strip().replace('<h1 class="entry-title">', '').replace('</h1>', '')))
 				 	#print(str(titles[0]))
 				if "music" in normal_degrees[i]:
+					titles.append(str(a.text.strip().replace('<h2>', '').replace('</h2>', '')))
+				if "medievalstudies" in normal_degrees[i]:
 					titles.append(str(a.text.strip().replace('<h2>', '').replace('</h2>', '')))
 			else:
 				titles.append(str(a.text.strip().replace('<h2>', '').replace('</h2>', '')))
