@@ -37,13 +37,15 @@ def create_url(str):
 	"""
 	if "biology" in str:
 		return("http://www.augsburg.edu/" + str)
+	if "business" in str:
+		return("http://www.augsburg.edu/" + str)
 	else:
 		return("http://www.augsburg.edu/" + str + "/degree-requirements")
 
 def create_major(majors, titles, degrees, uls, majorkeyword, minorkeyword):
 	for k in titles: #Only adds item to the major list if it has the word major or minor in it
 		if majorkeyword in str(k):
-			print(str(k))
+			#print(str(k))
 			#print("Appended: ", titles[k])
 			this_ul = []
 			children = uls.findChildren("li", recursive=False)
@@ -67,9 +69,12 @@ def create_major(majors, titles, degrees, uls, majorkeyword, minorkeyword):
 def main():
 	#Normal degrees hold the part of the URL for degrees that have similar HTML set up. The URL for all of these is www.augsburg.edu/{INSERT_COURSE}/degree-requirements
 	#Psychology doesn't account for any concentrations
-	normal_degrees = ["ais", "art", "biology/degrees/ba-biology/", "biology/degrees/bs-biology/", "biology/degrees/ba-life-sciences/", "biology/degrees/biopsychology/", "chemistry", "cs", "economics", "economics", "english", "environmental", "womensstudies", "hpe", "languages", "mathematics", "philosophy", "physics",  "politicalscience", "psychology", "religion", "socialwork/academics", "sociology", "theater", "urban"]
+	normal_degrees = ["ais", "art", 
+					  "biology/degrees/ba-biology/", "biology/degrees/bs-biology/", "biology/degrees/ba-life-sciences/", "biology/degrees/biopsychology/", 
+					  "business/degree-requirements/business-administration/", "business/degree-requirements/accounting/", "business/degree-requirements/finance/", "business/degree-requirements/international-business/", "business/degree-requirements/management/", "business/degree-requirements/management-information-systems/", "business/degree-requirements/marketing/", 
+					  "chemistry", "cs", "economics", "economics", "english", "environmental", "womensstudies", "hpe", "languages", "mathematics", "philosophy", "physics",  "politicalscience", "psychology", "religion", "socialwork/academics", "sociology", "theater", "urban"]
 
-	other_degrees = ["business", "communication", "music"]
+	other_degrees = ["communication", "music"]
 	degrees = []
 
 	#Education major is suuuuuuper wacky and not at all uniform.
@@ -88,25 +93,32 @@ def main():
 		#properly appends the URL for a major
 		majors = get_site(url)
 		#finds the proper div
+		x = [];
 
-		if "biology" in normal_degrees[i]:
-			page_response = requests.get(url, timeout=5)
-			page_content = BeautifulSoup(page_response.content, "html.parser")
-			x = page_content.find(class_='entry-title')
+		if "/" in normal_degrees[i]:
+			if "business" in normal_degrees[i]:
+				x = majors.find_all('h3')
+
+			if "biology" in normal_degrees[i]:
+				page_response = requests.get(url, timeout=5)
+				page_content = BeautifulSoup(page_response.content, "html.parser")
+				x = page_content.find(class_='entry-title')
+
 		else:
 			x = majors.find_all('h2')
-
-		y = [] #temporary list to hold all h2 in the entry-content div
-		y.append(x)
 
 		titles = []
 		uls = majors.ul #grabs all of the ul tags on the page
 		uls.text
 
 		for a in x: #This loop strips the list of all h2 tags
-			if "biology" in normal_degrees[i]:
-			 	titles.append(str(a.strip().replace('<h1 class="entry-title">', '').replace('</h1>', '')))
-			 	#print(str(titles[0]))
+			if "/" in normal_degrees[i]:
+				if "business" in normal_degrees[i]:
+					titles.append(str(a.text.strip().replace('<h3>', '').replace('</h3>', '')))
+			#		print(a.text)
+				if "biology" in normal_degrees[i]:
+				 	titles.append(str(a.strip().replace('<h1 class="entry-title">', '').replace('</h1>', '')))
+				 	#print(str(titles[0]))
 			else:
 				titles.append(str(a.text.strip().replace('<h2>', '').replace('</h2>', '')))
 
