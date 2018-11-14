@@ -41,6 +41,8 @@ def create_url(str):
 		return("http://www.augsburg.edu/" + str)
 	if "communication" in str:
 		return("http://www.augsburg.edu/" + str)
+	if "music" in str:
+		return("http://www.augsburg.edu/" + str)
 	else:
 		return("http://www.augsburg.edu/" + str + "/degree-requirements")
 
@@ -75,9 +77,9 @@ def main():
 					  "biology/degrees/ba-biology/", "biology/degrees/bs-biology/", "biology/degrees/ba-life-sciences/", "biology/degrees/biopsychology/", 
 					  "business/degree-requirements/business-administration/", "business/degree-requirements/accounting/", "business/degree-requirements/finance/", "business/degree-requirements/international-business/", "business/degree-requirements/management/", "business/degree-requirements/management-information-systems/", "business/degree-requirements/marketing/", 
 					  "communication/degrees/communication-studies/", "communication/degrees/film/", "communication/degrees/new-media/",
-					  "chemistry", "cs", "economics", "economics", "english", "environmental", "womensstudies", "hpe", "languages", "mathematics", "philosophy", "physics",  "politicalscience", "psychology", "religion", "socialwork/academics", "sociology", "theater", "urban"]
+					  "chemistry", "cs", "economics", "economics", "english", "environmental", "womensstudies", "hpe", "languages", "mathematics", "music/programs/requirements/", "philosophy", "physics",  "politicalscience", "psychology", "religion", "socialwork/academics", "sociology", "theater", "urban"]
 
-	other_degrees = ["communication", "music"]
+	other_degrees = ["music"]
 	degrees = []
 	#Film does not account for tracks. See: http://www.augsburg.edu/communication/degrees/film/
 	#Education major is suuuuuuper wacky and not at all uniform.
@@ -92,6 +94,10 @@ def main():
 		if "biology" in normal_degrees[i]:
 			majorkeyword = "Bachelor"
 			minorkeyword = "Bachelor"
+
+		if "music" in normal_degrees[i]:
+			majorkeyword = "Music"
+			minorkeyword = "Music"	
 
 		#properly appends the URL for a major
 		majors = get_site(url)
@@ -109,6 +115,8 @@ def main():
 				page_response = requests.get(url, timeout=5)
 				page_content = BeautifulSoup(page_response.content, "html.parser")
 				x = page_content.find(class_='entry-title')
+			if "music" in normal_degrees[i]:
+				x = majors.find_all('h2')
 
 		else:
 			x = majors.find_all('h2')
@@ -127,9 +135,10 @@ def main():
 				if "biology" in normal_degrees[i]:
 				 	titles.append(str(a.strip().replace('<h1 class="entry-title">', '').replace('</h1>', '')))
 				 	#print(str(titles[0]))
+				if "music" in normal_degrees[i]:
+					titles.append(str(a.text.strip().replace('<h2>', '').replace('</h2>', '')))
 			else:
 				titles.append(str(a.text.strip().replace('<h2>', '').replace('</h2>', '')))
-
 		#print(titles)
 		create_major(majors, titles, degrees, uls, majorkeyword, minorkeyword)		
 
