@@ -77,7 +77,11 @@ def main():
 					  "biology/degrees/ba-biology/", "biology/degrees/bs-biology/", "biology/degrees/ba-life-sciences/", "biology/degrees/biopsychology/", 
 					  "business/degree-requirements/business-administration/", "business/degree-requirements/accounting/", "business/degree-requirements/finance/", "business/degree-requirements/international-business/", "business/degree-requirements/management/", "business/degree-requirements/management-information-systems/", "business/degree-requirements/marketing/", 
 					  "communication/degrees/communication-studies/", "communication/degrees/film/", "communication/degrees/new-media/",
-					  "chemistry", "cs", "economics", "economics", "english", "environmental", "womensstudies", "hpe", "languages", "mathematics", "music/programs/requirements/", "philosophy", "physics",  "politicalscience", "psychology", "religion", "socialwork/academics", "sociology", "theater", "urban"]
+					  "chemistry", "cs", 
+					  "education/programs/sped/degree-requirements/", 
+					  "economics", "english", "environmental", "womensstudies", "hpe", "languages", "mathematics", 
+					  "music/programs/requirements/", 
+					  "philosophy", "physics",  "politicalscience", "psychology", "religion", "socialwork/academics", "sociology", "theater", "urban"]
 	degrees = []
 	#Film does not account for tracks. See: http://www.augsburg.edu/communication/degrees/film/
 	#Education major is suuuuuuper wacky and not at all uniform.
@@ -109,6 +113,9 @@ def main():
 			if "communication" in normal_degrees[i]:
 				x = majors.find_all('h3')
 
+			if "education" in normal_degrees[i]:
+				x = majors.find_all('h3')
+
 			if "biology" in normal_degrees[i]:
 				page_response = requests.get(url, timeout=5)
 				page_content = BeautifulSoup(page_response.content, "html.parser")
@@ -129,6 +136,8 @@ def main():
 					titles.append(str(a.text.strip().replace('<h3>', '').replace('</h3>', '')))
 			#		print(a.text)
 				if "communication" in normal_degrees[i]:
+					titles.append(str(a.text.strip().replace('<h3>', '').replace('</h3>', '')))
+				if "education" in normal_degrees[i]:
 					titles.append(str(a.text.strip().replace('<h3>', '').replace('</h3>', '')))
 				if "biology" in normal_degrees[i]:
 				 	titles.append(str(a.strip().replace('<h1 class="entry-title">', '').replace('</h1>', '')))
