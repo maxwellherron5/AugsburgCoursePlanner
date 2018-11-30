@@ -18,7 +18,6 @@
     <column id="6" parent="4" name="name">
       <Position>2</Position>
       <DataType>mediumtext|0</DataType>
-      <NotNull>1</NotNull>
     </column>
     <column id="7" parent="4" name="prereq">
       <Position>3</Position>
@@ -27,24 +26,16 @@
     <column id="8" parent="4" name="course_number">
       <Position>4</Position>
       <DataType>varchar(45)|0</DataType>
-      <NotNull>1</NotNull>
     </column>
     <column id="9" parent="4" name="credits">
       <Position>5</Position>
       <DataType>double|0</DataType>
-      <NotNull>1</NotNull>
     </column>
     <column id="10" parent="4" name="description">
       <Position>6</Position>
       <DataType>mediumtext|0</DataType>
-      <NotNull>1</NotNull>
     </column>
-    <column id="11" parent="4" name="department">
-      <Position>7</Position>
-      <DataType>varchar(45)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <key id="12" parent="4" name="PRIMARY">
+    <key id="11" parent="4" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>course_id</ColNames>
       <Primary>1</Primary>

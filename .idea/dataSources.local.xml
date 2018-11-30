@@ -8,7 +8,7 @@
       </database-info>
       <case-sensitivity plain-identifiers="mixed" quoted-identifiers="upper" />
       <secret-storage>master_key</secret-storage>
-      <introspection-schemas>*:information_schema</introspection-schemas>
+      <introspection-schemas>*:test_courses</introspection-schemas>
     </data-source>
   </component>
 </project>
