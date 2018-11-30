@@ -70,6 +70,11 @@ def create_url(str):
 
 def create_major(majors, titles, degrees, uls, majorkeyword, minorkeyword):
 	for k in titles: #Only adds item to the major list if it has the word major or minor in it
+		if "Music Core" in str(k):
+			majorkeyword = "Core"
+		else:
+			majorkeyword = "Major"
+			
 		if majorkeyword in str(k):
 			#print(str(k))
 			#print("Appended: ", titles[k])
@@ -168,6 +173,7 @@ def main():
 				 	#print(str(titles[0]))
 				if "music" in normal_degrees[i]:
 					titles.append(str(a.text.strip().replace('<h2>', '').replace('</h2>', '')))
+				#	print(a.text)
 				if "medievalstudies" in normal_degrees[i]:
 					titles.append(str(a.text.strip().replace('<h2>', '').replace('</h2>', '')))
 			else:
