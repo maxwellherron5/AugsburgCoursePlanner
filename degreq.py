@@ -2,22 +2,42 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import requests
 import sys
+import csv
 
 class DegreeRequirements:
 
 	def __init__(self, major, classes):
 		self.name = major
 		self.courses = classes.copy()
+		# self.dict = [self.name : self.courses]
 
-def print_arr(list):
+def print_arr(lst):
 	"""
-	Prints out a given list.
-	"""
-	for i in range(len(list)-1):
-		print("----------", list[i].name, "----------")
+	Prints out a given lst.
+	# """
+	# name_length = len(lst.name) - 1
+	# cours
+	# myFile = open('degreefile.csv', 'w')
+	# 	with myFile:
+	# 		for i in range(len(lst)-1):
+	# 			writer = csv.writer(myFile, fieldnames=lst[i].name)
+	# 			writer.writeheader()
+	# 			writer.writerow(lst[i].dict)
+
+
+
+	for i in range(len(lst)-1):
+		# myFile = open('degreefile.csv', 'w')
+		# with myFile:
+		# 	writer = csv.writer(myFile)
+		# 	writer.writerow([lst[i].name])
+		# 	for j in range(len(lst[i].courses)):
+		# 		writer.writerow([lst[i].courses[j]])
+
+		print("----------", lst[i].name, "----------")
 		print()
-		for j in range(len(list[i].courses)):
-			print(list[i].courses[j])
+		for j in range(len(lst[i].courses)):
+			print(lst[i].courses[j])
 		print()
 
 def get_site(url):
@@ -88,7 +108,7 @@ def main():
 	degrees = []
 	#Film does not account for tracks. See: http://www.augsburg.edu/communication/degrees/film/
 	#Education major is suuuuuuper wacky and not at all uniform. Special education has been accounted for, but I'm not at all sure how to do the rest.
-	#History is also wonky.
+
 	for i in range(len(normal_degrees)):
 		url = create_url(normal_degrees[i])
 
@@ -100,8 +120,8 @@ def main():
 			minorkeyword = "Bachelor"
 
 		if "music" in normal_degrees[i]:
-			majorkeyword = "Music"
-			minorkeyword = "Music"	
+			majorkeyword = "Major"
+			minorkeyword = "Minor"	
 
 		#properly appends the URL for a major
 		majors = get_site(url)
@@ -153,7 +173,7 @@ def main():
 			else:
 				titles.append(str(a.text.strip().replace('<h2>', '').replace('</h2>', '')))
 		#print(titles)
-		create_major(majors, titles, degrees, uls, majorkeyword, minorkeyword)		
+		create_major(majors, titles, degrees, uls, majorkeyword, minorkeyword)
 
 	print_arr(degrees)
 
