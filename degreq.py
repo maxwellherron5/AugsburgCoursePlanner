@@ -2,25 +2,48 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import requests
 import sys
+import csv
 
 class DegreeRequirements:
 
 	def __init__(self, major, classes):
 		self.name = major
 		self.courses = classes.copy()
+		# self.dict = [self.name : self.courses]
 
-	def print_arr(self, list):
-		"""
-		Prints out the list
-		"""
-		for i in range(len(list)-1):
-			print("----------", list[i].name, "----------")
-			print()
-			for j in range(len(list[i].courses)):
-				print(list[i].courses[j])
-			print()
+def print_arr(lst):
+	"""
+	Prints out a given lst.
+	# """
+	# name_length = len(lst.name) - 1
+	# cours
+	# myFile = open('degreefile.csv', 'w')
+	# 	with myFile:
+	# 		for i in range(len(lst)-1):
+	# 			writer = csv.writer(myFile, fieldnames=lst[i].name)
+	# 			writer.writeheader()
+	# 			writer.writerow(lst[i].dict)
+
+
+
+	for i in range(len(lst)-1):
+		# myFile = open('degreefile.csv', 'w')
+		# with myFile:
+		# 	writer = csv.writer(myFile)
+		# 	writer.writerow([lst[i].name])
+		# 	for j in range(len(lst[i].courses)):
+		# 		writer.writerow([lst[i].courses[j]])
+
+		print("----------", lst[i].name, "----------")
+		print()
+		for j in range(len(lst[i].courses)):
+			print(lst[i].courses[j])
+		print()
 
 def get_site(url):
+	"""
+	Given a url, this function will get the contents of the page.
+	"""
 	page_response = requests.get(url, timeout=5)
 	page_content = BeautifulSoup(page_response.content, "html.parser")
 	#gets the page
@@ -29,63 +52,136 @@ def get_site(url):
 	return(content)
 
 def create_url(str):
+	"""
+	Concatenates a strings to make a url of a given item in the degree requirements list.
+	"""
+	if "biology" in str:
+		return("http://www.augsburg.edu/" + str)
+	if "business" in str:
+		return("http://www.augsburg.edu/" + str)
+	if "communication" in str:
+		return("http://www.augsburg.edu/" + str)
+	if "music" in str:
+		return("http://www.augsburg.edu/" + str)
+	if "medievalstudies" in str:
+		return("http://www.augsburg.edu/" + str)
+	else:
+		return("http://www.augsburg.edu/" + str + "/degree-requirements")
 
-	return("http://www.augsburg.edu/" + str + "/degree-requirements")
+def create_major(majors, titles, degrees, uls, majorkeyword, minorkeyword):
+	for k in titles: #Only adds item to the major list if it has the word major or minor in it
+		if "Music Core" in str(k):
+			majorkeyword = "Core"
+		else:
+			majorkeyword = "Major"
+			
+		if majorkeyword in str(k):
+			#print(str(k))
+			#print("Appended: ", titles[k])
+			this_ul = []
+			children = uls.findChildren("li", recursive=False)
+			
+			for child in children: #Adds children of a ul tag to an array
+				this_ul.append(str(child.text.strip().replace('<li>', '')))
+			degree_requirements = DegreeRequirements(k, this_ul) #instance of class
+			degrees.append(degree_requirements)	#add degree_requirements object to list
+
+		if minorkeyword in str(k):
+			#print("Appended: ", titles[k])
+			this_ul = []
+			children = uls.findChildren("li", recursive=False)
+			
+			for child in children:
+				this_ul.append(str(child.text.strip().replace('<li>', '')))
+			degree_requirements = DegreeRequirements(k, this_ul)
+			degrees.append(degree_requirements)
+
 
 def main():
 	#Normal degrees hold the part of the URL for degrees that have similar HTML set up. The URL for all of these is www.augsburg.edu/{INSERT_COURSE}/degree-requirements
 	#Psychology doesn't account for any concentrations
-	normal_degrees = ["ais", "art", "chemistry", "cs", "economics", "economics", "english", "environmental", "womensstudies", "hpe", "languages", "mathematics", "philosophy", "physics",  "politicalscience", "psychology", "religion", "socialwork/academics", "sociology", "theater", "urban"]
-
-	other_degrees = ["biology", "business", "communication", "music"]
+	normal_degrees = ["ais", "art", 
+					  "biology/degrees/ba-biology/", "biology/degrees/bs-biology/", "biology/degrees/ba-life-sciences/", "biology/degrees/biopsychology/", 
+					  "business/degree-requirements/business-administration/", "business/degree-requirements/accounting/", "business/degree-requirements/finance/", "business/degree-requirements/international-business/", "business/degree-requirements/management/", "business/degree-requirements/management-information-systems/", "business/degree-requirements/marketing/", 
+					  "communication/degrees/communication-studies/", "communication/degrees/film/", "communication/degrees/new-media/",
+					  "chemistry", "cs", 
+					  "education/programs/sped/degree-requirements/", 
+					  "economics", "english", "environmental", "womensstudies", "hpe", "languages", "mathematics",
+					  "medievalstudies/program-details/", 
+					  "music/programs/requirements/", 
+					  "philosophy", "physics",  "politicalscience", "psychology", "religion", "socialwork/academics", "sociology", "theater", "urban"]
 	degrees = []
+	#Film does not account for tracks. See: http://www.augsburg.edu/communication/degrees/film/
+	#Education major is suuuuuuper wacky and not at all uniform. Special education has been accounted for, but I'm not at all sure how to do the rest.
 
-	#Education major is suuuuuuper wacky and not at all uniform.
-	#History is also wonky.
-	#Medieval Studies ends in /program-details/
-
-	for i in range(len(normal_degrees)-1): #loops for all degrees
+	for i in range(len(normal_degrees)):
 		url = create_url(normal_degrees[i])
-		
+
+		majorkeyword = "Major"
+		minorkeyword = "Minor"
+
+		if "biology" in normal_degrees[i]:
+			majorkeyword = "Bachelor"
+			minorkeyword = "Bachelor"
+
+		if "music" in normal_degrees[i]:
+			majorkeyword = "Major"
+			minorkeyword = "Minor"	
+
 		#properly appends the URL for a major
 		majors = get_site(url)
 		#finds the proper div
+		x = [];
 
-		x = majors.find_all('h2')
-		y = [] #temporary list to hold all h2 in the entry-content div
-		y.append(x)
+		if "/" in normal_degrees[i]:
+			if "business" in normal_degrees[i]:
+				x = majors.find_all('h3')
+
+			if "communication" in normal_degrees[i]:
+				x = majors.find_all('h3')
+
+			if "education" in normal_degrees[i]:
+				x = majors.find_all('h3')
+
+			if "biology" in normal_degrees[i]:
+				page_response = requests.get(url, timeout=5)
+				page_content = BeautifulSoup(page_response.content, "html.parser")
+				x = page_content.find(class_='entry-title')
+			if "music" in normal_degrees[i]:
+				x = majors.find_all('h2')
+			if "medievalstudies" in normal_degrees[i]:
+				x = majors.find_all('h2')
+
+		else:
+			x = majors.find_all('h2')
 
 		titles = []
 		uls = majors.ul #grabs all of the ul tags on the page
 		uls.text
-		#print(uls.text)
-		
+
 		for a in x: #This loop strips the list of all h2 tags
-			titles.append(str(a.text.strip().replace('<h2>', '').replace('</h2>', '')))
+			if "/" in normal_degrees[i]:
+				if "business" in normal_degrees[i]:
+					titles.append(str(a.text.strip().replace('<h3>', '').replace('</h3>', '')))
+			#		print(a.text)
+				if "communication" in normal_degrees[i]:
+					titles.append(str(a.text.strip().replace('<h3>', '').replace('</h3>', '')))
+				if "education" in normal_degrees[i]:
+					titles.append(str(a.text.strip().replace('<h3>', '').replace('</h3>', '')))
+				if "biology" in normal_degrees[i]:
+				 	titles.append(str(a.strip().replace('<h1 class="entry-title">', '').replace('</h1>', '')))
+				 	#print(str(titles[0]))
+				if "music" in normal_degrees[i]:
+					titles.append(str(a.text.strip().replace('<h2>', '').replace('</h2>', '')))
+				#	print(a.text)
+				if "medievalstudies" in normal_degrees[i]:
+					titles.append(str(a.text.strip().replace('<h2>', '').replace('</h2>', '')))
+			else:
+				titles.append(str(a.text.strip().replace('<h2>', '').replace('</h2>', '')))
+		#print(titles)
+		create_major(majors, titles, degrees, uls, majorkeyword, minorkeyword)
 
-
-		for k in range(len(titles)-1): #Only adds item to the major list if it has the word major or minor in it
-			if "Major" in str(titles[k]):
-				#print("Appended: ", titles[k])
-				this_ul = []
-				children = uls.findChildren("li", recursive=False)
-				
-				for child in children: #Adds children of a ul tag to an array
-					this_ul.append(str(child.text.strip().replace('<li>', '')))
-				degree_requirements = DegreeRequirements(titles[k], this_ul) #instance of class
-				degrees.append(degree_requirements)	#add degree_requirements object to list
-
-			if "Minor" in str(titles[k]):
-				#print("Appended: ", titles[k])
-				this_ul = []
-				children = uls.findChildren("li", recursive=False)
-				
-				for child in children:
-					this_ul.append(str(child.text.strip().replace('<li>', '')))
-				degree_requirements = DegreeRequirements(titles[k], this_ul)
-				degrees.append(degree_requirements)				
-
-	degree_requirements.print_arr(degrees)
+	print_arr(degrees)
 
 if __name__ == '__main__':
 	main()  
