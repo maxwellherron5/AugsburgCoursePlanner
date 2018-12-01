@@ -23,22 +23,24 @@ def print_arr(lst):
 	# 			writer = csv.writer(myFile, fieldnames=lst[i].name)
 	# 			writer.writeheader()
 	# 			writer.writerow(lst[i].dict)
-
-
+	col = []
+	row = []
 
 	for i in range(len(lst)-1):
-		# myFile = open('degreefile.csv', 'w')
-		# with myFile:
-		# 	writer = csv.writer(myFile)
-		# 	writer.writerow([lst[i].name])
-		# 	for j in range(len(lst[i].courses)):
-		# 		writer.writerow([lst[i].courses[j]])
+		col.append(lst[i].name)
+		row.append(lst[i].courses)
 
-		print("----------", lst[i].name, "----------")
-		print()
-		for j in range(len(lst[i].courses)):
-			print(lst[i].courses[j])
-		print()
+	myFile = open('degreefile_3.csv', 'w')
+	with myFile:
+		writer = csv.writer(myFile, delimiter=',')
+		writer.writerow(col) #writes all of the major headings
+		writer.writerow(row) 
+
+		# print("----------", lst[i].name, "----------")
+		# print()
+		# for j in range(len(lst[i].courses)):
+		# 	print(lst[i].courses[j])
+		# print()
 
 def get_site(url):
 	"""
