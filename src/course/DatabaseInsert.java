@@ -20,9 +20,12 @@ public class DatabaseInsert {
         //Populating the CourseList with course objects
         ScanCourseList(temp);
 
-        //Converting temp to a java ArrayList object so that I can iterate through i
+        //Converting temp to a java ArrayList object so that I can iterate through it
         ArrayList<Course> courseList;
+        ArrayList<String> departmentList;
         courseList = temp.getListOfCourses();
+        departmentList = temp.getListOfDepNames();
+
 
         //Attempting to push course objects to the MySQL database
         try {
@@ -47,8 +50,8 @@ public class DatabaseInsert {
                     }
                 }
 
-                String query = " insert into course_table(name, prereq, course_number, credits, description, department)" +
-                        " values(?, ?, ?, ?, ?, ?)";
+                String query = " insert into course_table(name, prereq, course_number, credits, description)" +
+                        " values(?, ?, ?, ?, ?)";
 
                 PreparedStatement statement = conn.prepareStatement(query);
                 statement.setString(1, course.getName());
@@ -56,11 +59,11 @@ public class DatabaseInsert {
                 statement.setString(3, course.getCoursenumber());
                 statement.setInt(4, course.getCredits());
                 statement.setString(5, course.getDescription());
-                statement.setString(6, course.getDepartment());
 
                 //Pushing the prepared statement to the table
                 statement.execute();
             }
+
 
             System.out.println("Success!");
             conn.close();
