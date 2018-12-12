@@ -18,7 +18,8 @@ public class CourseListTextScanner {
     public static CourseList ScanCourseList(CourseList courseList){
 
         /** This is the course list provided by the customer*/
-        File fileIn = new File("CourseListText/CourseDescriptions.txt");
+        File fileIn = new File("src/course/transcript/txt");
+
 
         /** This is the temp file we will use to modify the course list from the customer.
          * We need a temp because we will be reading lines from the customer text and then
