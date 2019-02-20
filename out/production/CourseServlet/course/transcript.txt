@@ -1,0 +1,68 @@
+Augsburg University Unofficial Transcript
+Name	
+Herron, Maxwell Steven
+Stage	
+Junior
+Date	
+11/30/2018
+Advisor	
+Scott Kerlin
+2015-2016 / Transfer Work I
+UG
+Dept/Course	Title	Grade	Credits
+ENG101-4	Composition	GRT	0.00
+AST101	Introduction to Astronomy	GRT	0.00
+AST102	Introduction to the Planets	GRT	0.00
+FILM114	Introduction to Film	GRT	0.00
+PHYS150	Explorations in Physics	GRT	0.00
+AST201	Spherical Astronomy	GRT	0.00
+TRNS000TR	Total Granted	GRT	17.00
+Current	0.000	17.00
+Cumulative	0.000	17.00
+2016-2017 / Transfer Work I
+UG
+Dept/Course	Title	Grade	Credits
+ANTH1127	Cultural Anthropology	GRT	0.00
+TRNS000TR	Total Granted	GRT	3.00
+Current	0.000	3.00
+Cumulative	0.000	20.00
+2016-2017 / Spring Semester
+UG
+Dept/Course	Title	Grade	Credits
+CSC170	Introduction to Programming	3.5	4.00
+CSC170L	Introduction to Programming Lab	L	0.00
+FLM180	Film Sight and Sound	1.5	4.00
+GER112	Beginning German II	3.5	4.00
+SOC121	Introduction to Sociology	1.0	4.00
+Current	2.375	16.00
+Cumulative	2.375	36.00
+2017-2018 / Fall Semester
+UG
+Dept/Course	Title	Grade	Credits
+CSC210	Data Structures	A	4.00
+CSC210L	Data Structures Lab	L	0.00
+CSC240	Intro to Networking and Communications	B+	4.00
+MAT114	Precalculus	C+	4.00
+RLN100	Religion, Vocation, and the Search for Meaning I	B-	4.00
+Current	3.082	16.00
+Cumulative	2.728	52.00
+2017-2018 / Spring Semester
+UG
+Dept/Course	Title	Grade	Credits
+ART215	Introduction to Web Design	A-	4.00
+CSC320	Algorithms	A	4.00
+CSC431	Introduction to A I Robotics	C+	4.00
+MAT145	Calculus I	A	4.00
+WEL100	Foundations of Wellness	P	1.00
+Current	3.500	17.00
+Cumulative	2.985	69.00
+2018-2019 / Fall Semester
+UG
+Dept/Course	Title	Grade	Credits
+CSC385	Formal Logic and Computation Theory	IP	0.00
+CSC395	Topics: Intro to Software Engineering	IP	0.00
+MAT146	Calculus II	IP	0.00
+PHY121	General Physics I	W	0.00
+PHY121L	General Physics I Lab	W	0.00
+Current	0.000	0.00
+Cumulative	2.985	69.00

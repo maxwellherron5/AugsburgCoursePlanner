@@ -9,9 +9,10 @@
   <link href="stylesheet.css" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
  <link rel="stylesheet" href="/style.css">
+    <script type="text/javascript" src="TranscriptReader.js"></script>
   <title> Augsburg University </title>
-
 </head>
+
 <body data-spy="scroll" data-target="#myScrollspy">
     <nav class="navbar navbar-default navbar-fixed-top" data-spy="affix" data-offset-top="205">
         <div class="container-fluid">
@@ -40,7 +41,35 @@
                 <div class="col-md-8 col-md-offset-2 col-sm-12 col-xs-12">
                     <h3>Transcript</h3>
                     <p>Upload Transcript here</p>
-                    <p>Find out what classes you need to register for! </p> <input type="file" class="btn btn-default-new" id="transcript" onclick="transcriptScan()" /> </div>
+                    <p>Find out what classes you need to register for! </p> <input type="file" class="btn btn-default-new" id="transcript" />
+                    <script src="require.js"></script>
+                    <script>
+                            console.log("works hopefully")
+                            function readSingleFile(evt) {
+                                var fs = require('fs');
+
+                                var file = evt.target.files[0];
+                                if (file) {
+                                    var reader = new FileReader();
+                                    reader.onload = function(e) {
+                                        var contents = reader.result;
+
+                                        fs.writeFile('transcript.txt', contents, function(err, contents) {
+                                            if (err) {
+                                                console.log(err);
+                                            }
+                                            console.log("Success!");
+                                        })
+                                    }
+                                    reader.readAsText(file);
+                                } else {
+                                    alert("Failed to load file");
+                                }
+                            }
+
+                            document.getElementById('transcript').addEventListener('change', readSingleFile, false);
+                    </script>
+                </div>
             </div>
         </div>
     </section>

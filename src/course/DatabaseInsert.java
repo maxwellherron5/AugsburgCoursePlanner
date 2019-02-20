@@ -3,6 +3,7 @@ package course;
 import java.sql.*;
 import java.util.ArrayList;
 import java.sql.DriverManager;
+import java.io.*;
 
 import static course.CourseListTextScanner.ScanCourseList;
 
@@ -17,6 +18,8 @@ public class DatabaseInsert {
 
         //This is the Courselist Object that contains all the course objects
         CourseList temp = new CourseList();
+        //This creates the file that is being read from
+        File inFile = new File("CourseListText/CourseDescriptions.txt");
         //Populating the CourseList with course objects
         ScanCourseList(temp);
 

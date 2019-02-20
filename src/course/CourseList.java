@@ -1,7 +1,7 @@
 package course;
 
 import java.util.ArrayList;
-
+import java.io.*;
 /**
  * This class is a course list of all courses at augsburg.
  */
@@ -14,6 +14,7 @@ public class CourseList {
     public CourseList(){
         CourseListTextScanner.ScanCourseList(this);                                     //Populates course list with course list and list of departments
     }
+
 
     /**
      * . Empty constructor for testing
